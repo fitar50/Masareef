@@ -1,5 +1,5 @@
 // Bump CACHE when you change any shell file, so clients pull the new version.
-const CACHE = "masareef-v1";
+const CACHE = "masareef-v3";
 const SHELL = [
   "./",
   "./index.html",

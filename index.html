@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1" />
-  <meta name="theme-color" content="#0E7C5A" />
+  <meta name="theme-color" content="#0E7C5A" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#0f1714" media="(prefers-color-scheme: dark)" />
   <title>مصاريفي</title>
   <link rel="manifest" href="manifest.json" />
   <link rel="apple-touch-icon" href="icons/icon-192.png" />
@@ -13,7 +14,7 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <!-- Login gate -->
+  <!-- Login -->
   <div id="login" class="login" hidden>
     <div class="login-card">
       <div class="brand">مصاريفي</div>
@@ -24,9 +25,8 @@
     </div>
   </div>
 
-  <!-- App -->
   <div id="app" class="app" hidden>
-    <!-- ADD screen -->
+    <!-- ADD -->
     <section id="viewAdd" class="view">
       <header class="topbar"><span class="brand-sm">مصاريفي</span></header>
 
@@ -39,28 +39,37 @@
 
       <input id="note" class="field note" type="text" placeholder="ملاحظة (اختياري)" maxlength="200" />
 
+      <div class="date-row">
+        <span class="date-label">التاريخ</span>
+        <input id="date" class="date-input" type="date" aria-label="تاريخ المصروف" />
+        <button id="dateToday" type="button" class="link-btn" hidden>رجّع النهاردة</button>
+      </div>
+
       <button id="saveBtn" class="btn btn-primary btn-lg">سجل المصروف</button>
     </section>
 
-    <!-- STATS screen -->
+    <!-- STATS -->
     <section id="viewStats" class="view" hidden>
-      <header class="topbar"><span class="brand-sm">المصاريف</span></header>
+      <header class="topbar stats-top">
+        <span class="brand-sm">المصاريف</span>
+        <button id="gear" class="icon-btn gear" title="الإعدادات" aria-label="الإعدادات">⚙</button>
+      </header>
 
-      <div class="cycle-range" id="cycleRange"></div>
-
-      <div class="headline">
-        <div class="headline-label">صرفت الدورة دي</div>
-        <div class="headline-num"><span id="totalNum">0</span> <span class="headline-cur">جنيه</span></div>
+      <div class="cycle-nav">
+        <button id="prevCycle" class="cyc-btn" aria-label="الدورة السابقة">‹</button>
+        <div id="cycleRange" class="cycle-range"></div>
+        <button id="nextCycle" class="cyc-btn" aria-label="الدورة التالية">›</button>
       </div>
+
+      <div id="headline" class="headline"></div>
 
       <div id="breakdown" class="breakdown"></div>
 
       <div class="list-head">العمليات</div>
       <div id="txList" class="tx-list"></div>
-      <div id="emptyState" class="empty" hidden>لسه مفيش مصاريف الدورة دي. سجل أول واحد من تبويب "تسجيل".</div>
+      <div id="emptyState" class="empty" hidden>لسه مفيش مصاريف الدورة دي.</div>
     </section>
 
-    <!-- Bottom nav -->
     <nav class="nav">
       <button id="tabAdd" class="nav-btn active" data-view="add">تسجيل</button>
       <button id="tabStats" class="nav-btn" data-view="stats">المصاريف</button>
@@ -72,7 +81,7 @@
     <div class="sheet-card">
       <div class="sheet-title">تعديل المصروف</div>
       <input id="editAmount" class="field" type="text" inputmode="decimal" placeholder="المبلغ" />
-      <div id="editChips" class="chips" role="group" aria-label="النوع"></div>
+      <div id="editChips" class="chips" role="group"></div>
       <input id="editNote" class="field" type="text" placeholder="ملاحظة (اختياري)" maxlength="200" />
       <div class="sheet-actions">
         <button id="editCancel" class="btn btn-ghost">إلغاء</button>
@@ -89,6 +98,44 @@
         <button id="confirmNo" class="btn btn-ghost">لا</button>
         <button id="confirmYes" class="btn btn-danger">امسح</button>
       </div>
+    </div>
+  </div>
+
+  <!-- Settings sheet -->
+  <div id="settingsSheet" class="sheet" hidden>
+    <div class="sheet-card settings-card">
+      <div class="sheet-title">الإعدادات</div>
+
+      <div class="settings-sec">
+        <div class="sec-title">ميزانية الدورة</div>
+        <input id="budgetInput" class="field" type="text" inputmode="decimal" placeholder="مثال: 5000" />
+        <label class="toggle">
+          <input id="budgetDefault" type="checkbox" checked />
+          <span>خليها الافتراضية لكل الدورات</span>
+        </label>
+        <button id="budgetSave" class="btn btn-primary">حفظ الميزانية</button>
+      </div>
+
+      <div class="settings-sec">
+        <div class="sec-title">مصاريف ثابتة كل شهر</div>
+        <div id="recurringList" class="recurring-list"></div>
+        <div class="recurring-add">
+          <div class="ra-row">
+            <input id="recAmount" class="field ra-amount" type="text" inputmode="decimal" placeholder="المبلغ" />
+            <input id="recDay" class="field ra-day" type="number" min="1" max="28" placeholder="يوم" />
+          </div>
+          <div id="recChips" class="chips" role="group"></div>
+          <input id="recNote" class="field" type="text" placeholder="ملاحظة (مثال: ايجار)" maxlength="200" />
+          <button id="recAdd" class="btn btn-ghost">زوّد مصروف ثابت</button>
+        </div>
+      </div>
+
+      <div class="settings-sec">
+        <button id="exportBtn" class="btn btn-ghost">تصدير كل البيانات CSV</button>
+        <button id="logoutBtn" class="btn btn-ghost danger-text">خروج</button>
+      </div>
+
+      <button id="settingsClose" class="btn btn-primary">تمام</button>
     </div>
   </div>
 
