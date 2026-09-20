@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1" />
+  <meta name="theme-color" content="#0E7C5A" />
+  <title>مصاريفي</title>
+  <link rel="manifest" href="manifest.json" />
+  <link rel="apple-touch-icon" href="icons/icon-192.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- Login gate -->
+  <div id="login" class="login" hidden>
+    <div class="login-card">
+      <div class="brand">مصاريفي</div>
+      <p class="login-sub">اكتب كلمة السر عشان تدخل</p>
+      <input id="pw" class="field" type="password" inputmode="text" placeholder="كلمة السر" autocomplete="current-password" />
+      <button id="loginBtn" class="btn btn-primary">دخول</button>
+      <p id="loginErr" class="err" hidden>كلمة السر غلط</p>
+    </div>
+  </div>
+
+  <!-- App -->
+  <div id="app" class="app" hidden>
+    <!-- ADD screen -->
+    <section id="viewAdd" class="view">
+      <header class="topbar"><span class="brand-sm">مصاريفي</span></header>
+
+      <div class="amount-wrap">
+        <input id="amount" class="amount" type="text" inputmode="decimal" placeholder="0" aria-label="المبلغ" />
+        <div class="amount-unit">جنيه</div>
+      </div>
+
+      <div id="chips" class="chips" role="group" aria-label="النوع"></div>
+
+      <input id="note" class="field note" type="text" placeholder="ملاحظة (اختياري)" maxlength="200" />
+
+      <button id="saveBtn" class="btn btn-primary btn-lg">سجل المصروف</button>
+    </section>
+
+    <!-- STATS screen -->
+    <section id="viewStats" class="view" hidden>
+      <header class="topbar"><span class="brand-sm">المصاريف</span></header>
+
+      <div class="cycle-range" id="cycleRange"></div>
+
+      <div class="headline">
+        <div class="headline-label">صرفت الدورة دي</div>
+        <div class="headline-num"><span id="totalNum">0</span> <span class="headline-cur">جنيه</span></div>
+      </div>
+
+      <div id="breakdown" class="breakdown"></div>
+
+      <div class="list-head">العمليات</div>
+      <div id="txList" class="tx-list"></div>
+      <div id="emptyState" class="empty" hidden>لسه مفيش مصاريف الدورة دي. سجل أول واحد من تبويب "تسجيل".</div>
+    </section>
+
+    <!-- Bottom nav -->
+    <nav class="nav">
+      <button id="tabAdd" class="nav-btn active" data-view="add">تسجيل</button>
+      <button id="tabStats" class="nav-btn" data-view="stats">المصاريف</button>
+    </nav>
+  </div>
+
+  <!-- Edit sheet -->
+  <div id="editSheet" class="sheet" hidden>
+    <div class="sheet-card">
+      <div class="sheet-title">تعديل المصروف</div>
+      <input id="editAmount" class="field" type="text" inputmode="decimal" placeholder="المبلغ" />
+      <div id="editChips" class="chips" role="group" aria-label="النوع"></div>
+      <input id="editNote" class="field" type="text" placeholder="ملاحظة (اختياري)" maxlength="200" />
+      <div class="sheet-actions">
+        <button id="editCancel" class="btn btn-ghost">إلغاء</button>
+        <button id="editSave" class="btn btn-primary">حفظ</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Confirm delete -->
+  <div id="confirm" class="sheet" hidden>
+    <div class="sheet-card">
+      <div class="sheet-title">تمسح المصروف ده؟</div>
+      <div class="sheet-actions">
+        <button id="confirmNo" class="btn btn-ghost">لا</button>
+        <button id="confirmYes" class="btn btn-danger">امسح</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast" class="toast" hidden></div>
+
+  <script src="config.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
