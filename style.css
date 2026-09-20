@@ -23,6 +23,11 @@
 
 * { box-sizing: border-box; }
 
+/* The hidden attribute must win over the display values set by .sheet/.login/
+   .app below; without this, author display rules override the UA [hidden] rule
+   and "hidden" elements (the edit/confirm sheets) render at load. */
+[hidden] { display: none !important; }
+
 html, body {
   margin: 0;
   padding: 0;
